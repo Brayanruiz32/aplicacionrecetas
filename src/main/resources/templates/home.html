@@ -1,13 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Pagina principal</title>
-    <!--Styles-->
+  <head>
+    <title>Listado de Comidas</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
-</head>
-<body>
-    <h1>esta va ser la pagina como tal de todos los usuarios para que puedan ver las recetas</h1>
-    <h2>esta pagina van a poder ingresar solo los que ya se hayan logueado</h2>
-    <p>existira un boton para que el administrador pueda ingresar al dashboard de la pagina, mientras que al usuario no le deberia aparecer obviamente</p>
-</body>
+    <link rel="stylesheet" th:href="@{/css/font.css}" />
+    <link rel="stylesheet" th:href="@{/css/default.css}" />
+    <link rel="stylesheet" th:href="@{/bootstrap/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/fontawesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/solid.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/brands.min.css}" />
+  </head>
+  <body>
+    <div class="container-web">
+      <header class="container-fluid bg-orange">
+        <div class="container py-4">
+          <img th:src="@{/images/logo_v2.png}" style="width: 200px" alt="" />
+        </div>
+      </header>
+      <main>
+        <div class="container">
+          <div class="row my-5 p-0">
+            <div class="col-md-4 p-0">
+              <a href="#" class="d-flex p-2">
+                <div
+                  class="category-base"
+                  style="
+                    background-image: url('/images/desayuno.jpg');
+                    background-size: cover;
+                  "
+                >
+                  <div
+                    class="bg-over d-flex justify-content-center align-items-center flex-column"
+                  >
+                    <h3 class="text-light">Desayuno</h3>
+                    <div class="category-icon">
+                      <i class="fa fa-plus text-light fs-2"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4 p-0">
+              <a href="#" class="d-flex p-2">
+                <div
+                  class="category-base"
+                  style="
+                    background-image: url('/images/almuerzo.jpg');
+                    background-size: cover;
+                  "
+                >
+                  <div
+                    class="bg-over d-flex justify-content-center align-items-center flex-column"
+                  >
+                    <h3 class="text-light">Almuerzo</h3>
+                    <div class="category-icon">
+                      <i class="fa fa-plus text-light fs-2"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-4 p-0">
+              <a href="#" class="d-flex p-2">
+                <div
+                  class="category-base"
+                  style="
+                    background-image: url('/images/cena.jpg');
+                    background-size: cover;
+                  "
+                >
+                  <div
+                    class="bg-over d-flex justify-content-center align-items-center flex-column"
+                  >
+                    <h3 class="text-light">Cena</h3>
+                    <div class="category-icon">
+                      <i class="fa fa-plus text-light fs-2"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
 </html>
