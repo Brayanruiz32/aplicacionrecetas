@@ -1,7 +1,5 @@
 package com.principal.aplicacionrecetas.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +22,7 @@ public class Usuario {
     private Long id;
     private String usuario;
     private String contrasenia;
-    @JsonManagedReference
+
     @ManyToOne
     @JoinColumn(name = "rol_id")
     private Rol rol;

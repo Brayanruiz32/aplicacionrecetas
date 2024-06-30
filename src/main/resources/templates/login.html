@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Listado de Comidas</title>
+    <title>Login</title>
 </head>
 <body>
-    <h1>AQUI ES EL FORMULARIO DEL LOGIN</h1>
-    <p>se pide un nombre de usuario</p>
-    <p>se pide una contraseña, que se oculte con puntitos xd</p>
-    <p>aqui se podran registrar SOLO los usuarios comunes</p>
-    <p>el administrador ya estará previamente creado asi como su usuario y contraseña</p>
-    <p>automaticamente despues de haberse logueado(usuario o administrador), a todos los usuarios debe llevarle al index principal donde se puede visualizar todas las recetas</p>
+    
+    <h2>Login</h2>
+    <form th:action="@{/login}" method="post">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required/>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required/>
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+        <div th:if="${param.error}">
+            Invalid username or password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+    </form>
+
+
+
+
+
+
 </body>
 </html>

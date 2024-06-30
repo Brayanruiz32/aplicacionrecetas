@@ -26,9 +26,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         Usuario usuario = usuarioRepository.findByUsuario(username).orElseThrow(() -> new EntityNotFoundException());
 
-        Collection<? extends GrantedAuthority> rol = Arrays.asList(new SimpleGrantedAuthority(usuario.getRol().getNombre()));
+        Collection<? extends GrantedAuthority> rol = Arrays.asList(new SimpleGrantedAuthority("ROLE_".concat(usuario.getRol().getNombre())));
 
-        UserDetails userDetails = new User(username, username, rol);
+        UserDetails userDetails = new User(username, usuario.getContrasenia(), rol);
         
         return userDetails;
     }

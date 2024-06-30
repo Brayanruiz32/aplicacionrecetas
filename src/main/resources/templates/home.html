@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Pagina principal</title>
 </head>
 <body>
-    <h1>esta va ser la pagina como tal de todos los usuarios para que puedan ver las recetas</h1>
-    <h2>esta pagina van a poder ingresar solo los que ya se hayan logueado</h2>
-    <p>existira un boton para que el administrador pueda ingresar al dashboard de la pagina, mientras que al usuario no le deberia aparecer obviamente</p>
+
+    <h1>ESTA ES LA PAGINA PRINCIPAL UNA VEZ LOGUEADO EL USUARIO OBVIAMENTE</h1>
+    <div sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+        <a href="/admin">Panel de administración</a>
+    </div>
+    <br>
+
+    <a th:href="@{/logout}">Logout</a>
+
 </body>
-</html>
+</html> 
