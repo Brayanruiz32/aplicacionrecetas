@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(http -> { 
 
-                    http.requestMatchers("/login", "/register").permitAll();
+                    http.requestMatchers("/**", "/register").permitAll();
                     String[] rutas = { "/rol/**", "/usuario/**", "/categoria/**", "/tipo/**", "/comida/**", "/bootstrap/**","/fontawesome/**" };
                     for (String ruta : rutas) {
                         http.requestMatchers(HttpMethod.GET, ruta).authenticated();
@@ -44,7 +44,7 @@ public class SecurityConfig {
                     // Permitir el acceso a la página de inicio y el registro
                     http.requestMatchers("/admin").hasRole("ADMINISTRADOR");
                     http.requestMatchers("/home").authenticated();
-                    http.anyRequest().authenticated();
+                   
                 })
                 
                 .formLogin(form -> form

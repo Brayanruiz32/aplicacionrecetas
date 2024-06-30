@@ -26,5 +26,10 @@ public class BasicController {
         return "admin";
     }
 
+    @GetMapping("registrar")
+    public String registrar(Model model){
+        return "register";
+    }
+
 
 }
