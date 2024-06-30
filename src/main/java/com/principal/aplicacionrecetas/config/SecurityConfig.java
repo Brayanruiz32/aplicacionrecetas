@@ -28,7 +28,7 @@ public class SecurityConfig {
             .httpBasic(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(http -> {
-                http.requestMatchers("/css/**", "/js/**", "/images/**", "/uploads/**","/bootstrap/**").permitAll();
+                http.requestMatchers("/css/**", "/js/**", "/images/**", "/uploads/**","/bootstrap/**","/fontawesome/**").permitAll();
                 String[] rutas = {"/rol/**", "/usuario/**","/categoria/**","/tipo/**","/comida/**"};
                 for (String ruta : rutas) {
                     http.requestMatchers(HttpMethod.GET, ruta).permitAll();
