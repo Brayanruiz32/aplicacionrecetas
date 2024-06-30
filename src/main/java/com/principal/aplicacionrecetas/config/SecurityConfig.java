@@ -44,8 +44,9 @@ public class SecurityConfig {
                     // Permitir el acceso a la página de inicio y el registro
                     http.requestMatchers("/admin").hasRole("ADMINISTRADOR");
                     http.requestMatchers("/home").authenticated();
-
+                    http.anyRequest().authenticated();
                 })
+                
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/home", true)
