@@ -6,23 +6,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin/comida") 
-public class ComidaViewController {
+@RequestMapping("/admin/rol")
+public class RolViewController {
+
 
     @GetMapping()
-    public String mostrarComida(Model model){
-        return "comidas/listar";
+    public String mostrarRoles(Model model){
+        return "carpeta/archivo";
     }
 
     @GetMapping("/create")
-    public String crearComida(Model model){
-        return "comidas/crear";
+    public String crearRoles(Model model){
+        return "carpeta/archivo";
     }
 
     @GetMapping("/update")
-    public String actualizarComida(Model model){
-        return "comidas/actualizar";
+    public String actualizarRoles(Model model){
+        return "carpeta/archivo";
     }
+
 
 
 }
