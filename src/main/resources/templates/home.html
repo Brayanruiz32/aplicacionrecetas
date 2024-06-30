@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
   <head>
     <title>Listado de Comidas</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
@@ -15,7 +18,21 @@
     <div class="container-web">
       <header class="container-fluid bg-orange">
         <div class="container py-4">
-          <img th:src="@{/images/logo_v2.png}" style="width: 200px" alt="" />
+          <div class="row">
+            <div class="col-md-6">
+              <img
+                th:src="@{/images/logo_v2.png}"
+                style="width: 200px"
+                alt=""
+              />
+            </div>
+            <div class="col-md-6 d-flex justify-content-end align-items-center">
+              <div class="">
+                <a th:href="@{/logout}" class="text-white px-3">Logout</a>
+                <a href="/admin" class="text-white border px-3 py-2">Intranet</a>
+              </div>
+            </div>
+          </div>
         </div>
       </header>
       <main>
