@@ -28,7 +28,7 @@ public class SecurityConfig {
             .httpBasic(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(http -> {
-                http.requestMatchers("/css/**", "/js/**", "/images/**", "/uploads/**").permitAll();
+                http.requestMatchers("/css/**", "/js/**", "/images/**", "/uploads/**","/bootstrap/**").permitAll();
                 String[] rutas = {"/rol/**", "/usuario/**","/categoria/**","/tipo/**","/comida/**"};
                 for (String ruta : rutas) {
                     http.requestMatchers(HttpMethod.GET, ruta).permitAll();
@@ -36,7 +36,7 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.PUT, ruta).permitAll();
                     http.requestMatchers(HttpMethod.DELETE, ruta).permitAll();
                 }
-                http.requestMatchers("/", "/home", "/login", "/register", "/about", "/admin").permitAll();
+                http.requestMatchers("/**", "/home", "/login", "/register", "/about", "/admin").permitAll();
             })
             // .formLogin(form -> form
             //     .loginPage("/login")           
