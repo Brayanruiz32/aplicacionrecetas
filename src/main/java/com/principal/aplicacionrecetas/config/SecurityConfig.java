@@ -28,10 +28,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-                .authorizeHttpRequests(http -> {
+                .authorizeHttpRequests(http -> { 
 
                     http.requestMatchers("/login", "/register").permitAll();
-                    String[] rutas = { "/rol/**", "/usuario/**", "/categoria/**", "/tipo/**", "/comida/**" };
+                    String[] rutas = { "/rol/**", "/usuario/**", "/categoria/**", "/tipo/**", "/comida/**", "/bootstrap/**","/fontawesome/**" };
                     for (String ruta : rutas) {
                         http.requestMatchers(HttpMethod.GET, ruta).authenticated();
                         http.requestMatchers(HttpMethod.POST, ruta).permitAll();

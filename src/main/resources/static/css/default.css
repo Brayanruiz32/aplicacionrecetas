@@ -1,0 +1,22 @@
+/*Colors*/
+* {
+  font-family: 'Kanit', sans-serif !important;
+  user-select: none !important;
+  text-decoration: none !important;
+}
+/*Text colors*/
+.text-orange {
+  color: #ff3c00;
+}
+.text-opacity {
+  color: #96778b;
+}
+/*Background colors*/
+.bg-orange {
+  background-color: #ff3c00;
+}
+
+/*Others colors*/
+.form-control {
+  font-size: 13px !important;
+}
