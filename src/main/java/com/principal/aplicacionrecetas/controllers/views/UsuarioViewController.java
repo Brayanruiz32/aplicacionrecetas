@@ -14,6 +14,11 @@ public class UsuarioViewController {
         return "carpeta/archivo";
     }
 
+    @GetMapping("/{id}")
+    public String mostrarUsuario(Model model){
+        return "carpeta/archivo";
+    }
+
     @GetMapping("/create")
     public String crearUsuarios(Model model){
         return "carpeta/archivo";

@@ -20,7 +20,6 @@ public class BasicController {
         return "home";
     }
 
-
     @GetMapping("admin")
     public String admin(Model model){
         return "admin";

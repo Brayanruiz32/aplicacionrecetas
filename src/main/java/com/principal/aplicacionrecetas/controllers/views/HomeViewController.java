@@ -6,35 +6,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin/comida") 
-public class ComidaViewController {
+@RequestMapping("/home")
+public class HomeViewController {
 
-    @GetMapping()
+
+    @GetMapping("/comidas")
     public String mostrarComidas(Model model){
         return "carpeta/archivo";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/comidas/{id}")
     public String mostrarComida(Model model){
         return "carpeta/archivo";
     }
 
-    @GetMapping("/{categoria}")
-    public String mostrarPorCategoria(){
+    //tipo=desayuno, almuerzo, cena
+    @GetMapping("/comidas/{tipo}")
+    public String mostrarPorTipo(Model model){
         return "carpeta/archivo";
     }
-
-    @GetMapping("/create")
-    public String crearComida(Model model){
+    //categoria=fitness, grasosa, salada
+    @GetMapping("/comidas/{categoria}")
+    public String mostrarPorCategoria(Model model){
         return "carpeta/archivo";
     }
-
-    @GetMapping("/update")
-    public String actualizarComida(Model model){
-        return "carpeta/archivo";
-    }
-
-
-
-
 }

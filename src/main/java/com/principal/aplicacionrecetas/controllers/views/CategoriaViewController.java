@@ -10,9 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CategoriaViewController {
 
     @GetMapping()
+    public String mostrarCategorias(Model model){
+        return "carpeta/archivo";
+    }
+
+    @GetMapping("/{id}")
     public String mostrarCategoria(Model model){
         return "carpeta/archivo";
     }
+
 
     @GetMapping("/create")
     public String crearCategoria(Model model){
