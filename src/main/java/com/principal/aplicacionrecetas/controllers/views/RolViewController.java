@@ -15,6 +15,11 @@ public class RolViewController {
         return "carpeta/archivo";
     }
 
+    @GetMapping("/{id}")
+    public String mostrarRol(Model model){
+        return "carpeta/archivo";
+    }
+
     @GetMapping("/create")
     public String crearRoles(Model model){
         return "carpeta/archivo";

@@ -14,6 +14,11 @@ public class TipoViewController {
         return "carpeta/archivo";
     }
 
+    @GetMapping("/{id}")
+    public String mostrarTipo(Model model){
+        return "carpeta/archivo";
+    }
+
     @GetMapping("/create")
     public String crearTipos(Model model){
         return "carpeta/archivo";
