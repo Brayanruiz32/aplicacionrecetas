@@ -1,16 +1,133 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head>
     <title>Listado de Comidas</title>
-
-    <link rel="stylesheet" th:href="@{/css/estilos.css}" />
-
-</head>
-<body>
-
-<h1>Aqui vas a crear comidas</h1>
-
-
-    <script th:src="@{/js/scripts.js}"></script>
-</body>
-</html> 
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+    <link rel="stylesheet" th:href="@{/css/font.css}" />
+    <link rel="stylesheet" th:href="@{/css/default.css}" />
+    <link rel="stylesheet" th:href="@{/bootstrap/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/fontawesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/solid.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/brands.min.css}" />
+  </head>
+  <body>
+    <div class="container-admin">
+      <main>
+        <div class="d-flex p-0 w-100">
+          <div class="col-md-2 p-0">
+            <div th:insert="fragments :: navbar"></div>
+          </div>
+          <div class="col-md-10 p-0">
+            <header class="d-flex py-3 justify-content-end bg-orange">
+              <div class="d-flex pe-3">
+                <a th:href="@{/logout}" class="text-white px-3"
+                  >Cerrar sesión</a
+                >
+              </div>
+            </header>
+            <div class="col" style="overflow: auto">
+              <div class="m-3">
+                <div class="d-flex justify-content-between">
+                  <h5 class="text-start py-2 text-dark">Crear receta</h5>
+                </div>
+                <div class="bg-white p-3">
+                  <form action="" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                      <label for="receta" class="form-label"
+                        >Nombre de la receta</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="receta"
+                        name="comida"
+                        placeholder="Nombre de la receta"
+                      />
+                    </div>
+                    <!--Imagen -->
+                    <div class="mb-3">
+                      <label for="imagen" class="form-label"
+                        >Imagen de la receta</label
+                      >
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="imagen"
+                        name="imagen"
+                        accept="image/png, image/jpeg, image/jpg"
+                      />
+                    </div>
+                    <!--Selects -->
+                    <div
+                      class="d-flex justify-content-between mb-3 gap-2 align-items-center"
+                    >
+                      <div class="mb-3 w-50">
+                        <label for="tipo" class="form-label">Tipo</label>
+                        <select
+                          class="form-select"
+                          name="tipo"
+                        >
+                          <option selected>Seleccionar</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                        </select>
+                      </div>
+                      <div class="mb-3 w-50">
+                        <label for="categoria" class="form-label"
+                          >Categoría</label
+                        >
+                        <select
+                          class="form-select"
+                          name="categoria"
+                        >
+                          <option selected>Seleccionar</option>
+                          <option value="1">Desayuno</option>
+                          <option value="2">Comida</option>
+                          <option value="3">Cena</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!--Textarea -->
+                    <div class="mb-3">
+                      <label for="ingredientes" class="form-label"
+                        >Ingredientes</label
+                      >
+                      <textarea
+                        class="form-control"
+                        id="ingredientes"
+                        name="ingredientes"
+                        rows="5"
+                      ></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <label for="preparacion" class="form-label"
+                        >Preparación</label
+                      >
+                      <textarea
+                        class="form-control"
+                        id="preparacion"
+                        name="preparacion"
+                        rows="6"
+                      ></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <button type="submit" class="btn btn-success">
+                        Guardar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

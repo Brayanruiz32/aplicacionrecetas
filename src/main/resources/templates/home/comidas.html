@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head>
+    <title>Listado de Comidas</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/font.css}" />
+    <link rel="stylesheet" th:href="@{/css/default.css}" />
+    <link rel="stylesheet" th:href="@{/bootstrap/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/fontawesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/solid.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/brands.min.css}" />
+  </head>
+  <body>
+    <div class="container-web">
+      <header class="container-fluid bg-orange">
+        <div class="container py-4">
+          <div class="row">
+            <div class="col-md-6">
+              <a href="/home">
+                <img
+                th:src="@{/images/logo_v2.png}"
+                style="width: 200px"
+                alt=""
+              />
+               </a>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end align-items-center">
+              <div class="">
+                <a th:href="@{/logout}" class="text-white px-3">Logout</a>
+                <a href="/admin" class="text-white border px-3 py-2"
+                  >Intranet</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main>
+        <div class="container">
+          <div class="row py-5">
+            <h3 class="text-center hr-title">❝ Recetas ❞</h3>
+          </div>
+          <div class="row mb-5 p-0">
+            <div class="col-md-12 p-0">
+              <div class="col">
+                <div class="mb-2 d-flex">
+                  <input type="text" class="form-control" id="search" placeholder="¿En qué estás pensando?, busca una receta...">
+                  <button class="btn"><i class="fa fa-search"></i></button>
+                </div>
+                <section class="border bg-white p-5">
+                  <a href="#" class="mb-3 d-flex" target="_blank">
+                    <div class="divider-wrapper d-flex">
+                      <div
+                        class="divider-image"
+                        style="background-image: url('/images/food.jpg')"
+                      ></div>
+                      <div class="divider-content ps-3">
+                        <div class="d-flex">
+                          <h4 class="pe-2 text-orange border-end">
+                            <strong>Lorem ipsum</strong>
+                          </h4>
+                          <h4 class="ps-2"><i class="fa fa-star"></i> 4.3</h4>
+                        </div>
+                        <div><p class="mb-1 p-0 text-success"><strong>CATEGORIA</strong> | TIPO</p></div>
+                        <p class="text-secondary">
+                          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis animi, dolore excepturi exercitationem recusandae incidunt, ipsam libero assumenda iusto corrupti provident, ratione consequatur placeat illo eius consectetur nisi dolorum facere.
+                          Dignissimos, ullam natus! Accusamus qui suscipit atque ullam, quis alias natus similique non porro a nam veniam facere, ea officia eius sunt aspernatur ratione iure ab magni debitis, in doloribus?
+                          Molestiae ipsam explicabo hic. Architecto nesciunt maxime tempora qui delectus perferendis aut quas tenetur, ab, doloremque atque praesentium quasi! Consectetur, ut exercitationem earum veritatis eos necessitatibus eveniet ratione alias qui.
+                        </p>
+                      </div>
+                    </div>
+                  </a>                  
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <p class="text-center text-secondary">
+                © 2024. All rights reserved. Created by
+                <a
+                  class="text-orange"
+                  href="https://unsm.edu.pe/facultad/ingenieria-de-sistemas/" target="_blank"
+                  >@fisi</a>
+              </p>
+            </div>
+          </div>
+      </footer>
+    </div>
+  </body>
+</html>

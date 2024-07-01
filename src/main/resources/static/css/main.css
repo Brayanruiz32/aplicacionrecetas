@@ -1,9 +1,10 @@
 
 body{
+  font-family: 'Kanit', sans-serif !important;
     margin: 0;
     padding: 0;
     font-size: 13px !important;
-    background-color: #F6F8F9;
+    background-color: #efefef !important;
 }
 
 /*Home*/
@@ -19,5 +20,21 @@ body{
   background-color: rgba(0,0,0,0.2);
 }
 .category-base .bg-over:hover{
-  
+  background-color: rgba(0,0,0,0.4);
+}
+
+.divider-wrapper{
+  height: 150px;
+  overflow: hidden;
+}
+
+.divider-image{
+  display: flex;
+  background-size: cover;
+  background-position: center;
+  width: 500px;
+  height: 150px;
+}
+.divider-content{
+  width: fit-content;
 }

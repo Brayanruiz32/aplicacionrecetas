@@ -1,19 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head>
     <title>Listado de Comidas</title>
-    <link rel="stylesheet" th:href="@{/css/estilos.css}" />
-</head>
-<body>
-    <h1>AQUI ES LA CARA PRINCIPAL DEL DASHBOARD DEL ADMINISTRADOR</h1>
-    <p>al costado izquierdo debe estar los modulos</p>
-    <p>en el centro, los cruds de cada modulo</p>
-
-    <a href="/admin/comida">Comidas</a>
-
-
-
-
-    <script th:src="@{/js/scripts.js}"></script>
-</body>
-</html> 
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+    <link rel="stylesheet" th:href="@{/css/font.css}" />
+    <link rel="stylesheet" th:href="@{/css/default.css}" />
+    <link rel="stylesheet" th:href="@{/bootstrap/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/fontawesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/solid.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/brands.min.css}" />
+  </head>
+  <body>
+    <div class="container-admin">
+      <main>
+        <div class="d-flex p-0 w-100">
+          <div class="col-md-2 p-0">
+            <div th:insert="fragments :: navbar"></div>
+          </div>
+          <div class="col-md-10 p-0">
+            <header class="d-flex py-3 justify-content-end bg-orange">
+              <div class="d-flex pe-3">
+                <a th:href="@{/logout}" class="text-white px-3">Cerrar sesión</a>
+              </div>
+            </header>
+            <div class="col">
+              <div class="m-3">
+                <h6 class="text-start text-secondary">Hola, bienvenido al sistema.</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

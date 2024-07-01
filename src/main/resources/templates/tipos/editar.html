@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head>
+    <title>Listado de Comidas</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin.css}" />
+    <link rel="stylesheet" th:href="@{/css/font.css}" />
+    <link rel="stylesheet" th:href="@{/css/default.css}" />
+    <link rel="stylesheet" th:href="@{/bootstrap/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/fontawesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/all.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/solid.min.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/css/brands.min.css}" />
+  </head>
+  <body>
+    <div class="container-admin">
+      <main>
+        <div class="d-flex p-0 w-100">
+          <div class="col-md-2 p-0">
+            <div th:insert="fragments :: navbar"></div>
+          </div>
+          <div class="col-md-10 p-0">
+            <header class="d-flex py-3 justify-content-end bg-orange">
+              <div class="d-flex pe-3">
+                <a th:href="@{/logout}" class="text-white px-3"
+                  >Cerrar sesión</a
+                >
+              </div>
+            </header>
+            <div class="col" style="overflow: auto">
+              <div class="m-3">
+                <div class="d-flex justify-content-between">
+                  <h5 class="text-start py-2 text-dark">Editar tipo</h5>
+                </div>
+                <div class="bg-white p-3">
+                  <form action="" method="post">
+                    <div class="mb-3">
+                      <label for="tipo" class="form-label"
+                        >Nombre del tipo</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="tipo"
+                        name="nombre"
+                        placeholder="Nombre del tipo"
+                      />
+                    </div>
+                    <div class="my-3">
+                      <button type="submit" class="btn btn-success">
+                        Guardar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

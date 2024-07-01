@@ -1,6 +1,5 @@
 /*Colors*/
 * {
-  font-family: 'Kanit', sans-serif !important;
   user-select: none !important;
   text-decoration: none !important;
 }
@@ -15,8 +14,39 @@
 .bg-orange {
   background-color: #ff3c00;
 }
-
+.bg-opacity {
+  background-color: #96778b;
+}
+.bg-gray {
+  background-color: #322f31;
+}
 /*Others colors*/
 .form-control {
   font-size: 13px !important;
+}
+.hr-title{
+  position: relative;
+}
+.hr-title::before{
+  content: '';
+  width: 35%;
+  height: 1px;
+  background-color: #ff3c00;
+  display: block;
+  margin: 0 auto;
+  top:50%;
+  transform: rotate(1deg);
+  position: absolute;
+  }
+.hr-title::after{
+content: '';
+width: 35%;
+height: 1px;
+background-color: #ff3c00;
+display: block;
+margin: 0 auto;
+top:50%;
+right: 0;
+transform: rotate(-1deg);
+position: absolute;
 }
