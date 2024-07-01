@@ -12,22 +12,22 @@ public class HomeViewController {
 
     @GetMapping("/comidas")
     public String mostrarComidas(Model model){
-        return "web/comidas";
+        return "home/comidas";
     }
 
     @GetMapping("/comidas/{id}")
     public String mostrarComida(Model model){
-        return "web/comida";
+        return "home/comida";
     }
 
     //tipo=desayuno, almuerzo, cena
     @GetMapping("/comidas/{tipo_id}")
     public String mostrarPorTipo(Model model){
-        return "web/comidaTipo";
+        return "home/comidaTipo";
     }
     //categoria=fitness, grasosa, salada
     @GetMapping("/comidas/{categoria_id}")
     public String mostrarPorCategoria(Model model){
-        return "web/comidaCategoria";
+        return "home/comidaCategoria";
     }
 }
