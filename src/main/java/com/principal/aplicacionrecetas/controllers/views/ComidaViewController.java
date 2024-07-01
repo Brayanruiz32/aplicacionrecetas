@@ -11,22 +11,27 @@ public class ComidaViewController {
 
     @GetMapping()
     public String mostrarComidas(Model model){
-        return "comidas/listar";
+        return "carpeta/archivo";
     }
 
     @GetMapping("/{id}")
     public String mostrarComida(Model model){
-        return "comida";
+        return "carpeta/archivo";
+    }
+
+    @GetMapping("/{categoria}")
+    public String mostrarPorCategoria(){
+        return "carpeta/archivo";
     }
 
     @GetMapping("/create")
     public String crearComida(Model model){
-        return "comidas/crear";
+        return "carpeta/archivo";
     }
 
     @GetMapping("/update")
     public String actualizarComida(Model model){
-        return "comidas/actualizar";
+        return "carpeta/archivo";
     }
 
 
