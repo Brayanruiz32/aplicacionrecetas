@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <title>Listado de Comidas</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
@@ -26,9 +25,8 @@
           <div class="col-md-10 p-0">
             <header class="d-flex py-3 justify-content-end bg-orange">
               <div class="d-flex pe-3">
-                <a th:href="@{/logout}" class="text-white px-3"
-                  >Cerrar sesión</a
-                >
+                <a th:href="@{/logout}" class="text-white px-3">Cerrar
+                  sesión</a>
               </div>
             </header>
             <div class="col">
@@ -36,9 +34,8 @@
                 <div class="d-flex justify-content-between">
                   <h5 class="text-start py-2 text-dark">Listado de Usuarios</h5>
                   <p>
-                    <a href="" class="btn btn-primary"
-                      ><i class="fa fa-plus me-2"></i>Nuevo</a
-                    >
+                    <a href="usuario/create" class="btn btn-primary"><i
+                        class="fa fa-plus me-2"></i>Nuevo</a>
                   </p>
                 </div>
                 <div class="bg-white table-responsive p-2">
@@ -51,16 +48,7 @@
                         <th class="w-25 text-center">Acciones</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td class="text-center">1</td>
-                        <td class="w-25 text-center">
-                          <a href="" class="btn btn-primary">Editar</a>
-                          <a href="" class="btn btn-danger">Eliminar</a>
-                        </td>
-                      </tr>
+                    <tbody id="usuariosTabla">
                     </tbody>
                   </table>
                 </div>
@@ -70,5 +58,82 @@
         </div>
       </main>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        fetch('/usuario/find/all')
+            .then(response => response.json())
+            .then(data => {
+                const rolesTableBody = document.getElementById('usuariosTabla');
+                rolesTableBody.innerHTML = ''; // Limpiar contenido previo
+  
+                data.forEach(usuario => {
+                    const row = document.createElement('tr');
+  
+                    row.innerHTML = `
+                        <td>${usuario.id}</td>
+                        <td>${usuario.usuario}</td>
+                        <td class="text-center">${usuario.rol.nombre}</td>
+                        <td class="w-25 text-center">
+                            <a href="usuario/update?id=${usuario.id}" class="btn btn-primary">Editar</a>
+                            <button class="btn btn-danger" onclick="deleteUsuario(${usuario.id})">Eliminar</button>
+                        </td>
+                    `;
+  
+                    rolesTableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+            
+
+          
+    });
+    function deleteUsuario(id) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminarlo!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(`/usuario/delete/${id}`, {
+            method: 'DELETE'
+          })
+          .then(response => {
+            if (response.ok) {
+              Swal.fire(
+                'Eliminado!',
+                'El usuario ha sido eliminado.',
+                'success'
+              ).then(() => {
+                // Recargar la tabla de usuario
+                location.reload();
+              });
+            } else {
+              Swal.fire(
+                'Error!',
+                'Hubo un problema al eliminar el usuario.',
+                'error'
+              );
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            Swal.fire(
+              'Error!',
+              'Hubo un problema al eliminar el usuario.',
+              'error'
+            );
+          });
+        }
+      });
+    }
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

@@ -3,6 +3,7 @@ package com.principal.aplicacionrecetas.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,27 +22,28 @@ public class UsuarioController implements IController<Usuario> {
     private IServices<Usuario> usuarioService;
 
     @GetMapping("/find/all")
-    public List<Usuario> listar() {
-        return usuarioService.listar();
+    public ResponseEntity<List<Usuario>> listar() {
+        return  ResponseEntity.ok(usuarioService.listar());
     }
 
     @GetMapping("/find/{id}")
-    public Usuario encontrar(Long id) {
-        return usuarioService.encontrar(id);
+    public ResponseEntity<Usuario> encontrar(Long id) {
+        return  ResponseEntity.ok(usuarioService.encontrar(id));
     }
 
     @PostMapping("/create")
-    public Usuario crear(Usuario nuevoRegistro) {
-        return usuarioService.crear(nuevoRegistro);
+    public ResponseEntity<Usuario> crear(Usuario nuevoRegistro) {
+        return  ResponseEntity.ok(usuarioService.crear(nuevoRegistro));
     }
 
     @PutMapping("/update/{id}")
-    public Usuario editar(Long id, Usuario nuevosDatos) {
-        return usuarioService.actualizar(id, nuevosDatos);
+    public ResponseEntity<Usuario> editar(Long id, Usuario nuevosDatos) {
+        return  ResponseEntity.ok(usuarioService.actualizar(id, nuevosDatos));
     }
 
     @DeleteMapping("/delete/{id}")
-    public void eliminar(Long id) {
+    public ResponseEntity<Void> eliminar(Long id) {
         usuarioService.eliminar(id);
+       return ResponseEntity.noContent().build();
     }
 }

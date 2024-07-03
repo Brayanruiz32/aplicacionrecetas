@@ -36,7 +36,7 @@
                   <h5 class="text-start py-2 text-dark">Crear usuario</h5>
                 </div>
                 <div class="bg-white p-3">
-                  <form action="" method="post">
+                  <form id="createUserForm" action="" method="post">
                     <div class="mb-3">
                       <label for="usuario" class="form-label"
                         >Nombre del usuario</label
@@ -63,11 +63,9 @@
                     </div>
                     <div class="mb-3">
                       <label for="rol" class="form-label">Rol</label>
-                      <select class="form-select" name="rol">
+                      <select class="form-select" id="rolSelect" name="rolSelect">
                         <option selected>Seleccionar</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+
                       </select>
                     </div>
                     <div class="my-3">
@@ -83,5 +81,66 @@
         </div>
       </main>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+
+        fetch('/rol/find/all') // Ajusta esta URL según tu configuración de la API
+          .then(response => response.json())
+          .then(data => {
+            const rolSelect = document.getElementById('rolSelect');
+      
+            data.forEach(rol => {
+              const option = document.createElement('option');
+              option.value = rol.id;
+              option.textContent = rol.nombre; // Ajusta según el nombre de la propiedad en tu API
+              rolSelect.appendChild(option);
+            });
+          })
+          .catch(error => console.error('Error al cargar las categorías:', error));
+
+
+          const form = document.getElementById('createUserForm');
+
+          form.addEventListener('submit', function(event) {
+              event.preventDefault(); // Evitar el envío por defecto del formulario
+
+              const formData = {
+                  usuario: document.getElementById('usuario').value,
+                  contrasenia: document.getElementById('password').value,
+                  rol: { id: document.getElementById('rolSelect').value }
+              };
+
+              fetch('/usuario/create', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(formData)
+              })
+              .then(response => {
+                  if (response.ok) {
+                    Swal.fire({
+                      title: 'Usuario creado exitosamente',
+                      icon: 'success',
+                      confirmButtonText: 'OK'
+                    }).then(() => {
+                      // Redirigir a la página de lista de usuarios o cualquier otra página
+                      window.location.href = '/admin/usuario';
+                    });
+                  } else {
+                      return response.json().then(data => {
+                          throw new Error(data.message || 'Error al crear el usuario');
+                      });
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  alert('Error: ' + error.message);
+              });
+          });
+      });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

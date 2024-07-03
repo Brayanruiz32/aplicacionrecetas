@@ -28,23 +28,30 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                // .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> { 
-
-                    http.requestMatchers("/**", "/register").permitAll();
-                    String[] rutas = { "/rol/**", "/usuario/**", "/categoria/**", "/tipo/**", "/comida/**", "/bootstrap/**","/fontawesome/**" };
+                    String[] rutas = { "/rol/**","/comida/**" , "/usuario/**", "/categoria/**", "/tipo/**", "/comida/**" };
                     for (String ruta : rutas) {
-                        http.requestMatchers(HttpMethod.GET, ruta).authenticated();
-                        http.requestMatchers(HttpMethod.POST, ruta).permitAll();
-                        http.requestMatchers(HttpMethod.PUT, ruta).authenticated();
-                        http.requestMatchers(HttpMethod.DELETE, ruta).authenticated();
-                    }
-                    // Permitir el acceso a recursos estáticos
-                    http.requestMatchers("/css/**", "/js/**", "/images/**", "/uploads/**").permitAll();
+                        // http.requestMatchers(HttpMethod.GET, ruta).permitAll();
+                        // http.requestMatchers(HttpMethod.POST, ruta).permitAll();
+                        // http.requestMatchers(HttpMethod.PUT, ruta).permitAll();
+                        // http.requestMatchers(HttpMethod.DELETE, ruta).permitAll();
 
+
+                        http.requestMatchers(HttpMethod.GET, ruta).hasAnyRole("ADMINISTRADOR");
+                        http.requestMatchers(HttpMethod.POST, ruta).hasAnyRole("ADMINISTRADOR");
+                        http.requestMatchers(HttpMethod.PUT, ruta).hasAnyRole("ADMINISTRADOR");
+                        http.requestMatchers(HttpMethod.DELETE, ruta).hasAnyRole("ADMINISTRADOR");
+                    }
+              
+                    http.requestMatchers("/registrar" ,"/login","/css/**", "/js/**", "/images/**", "/uploads/**", "/bootstrap/**","/fontawesome/**").permitAll();
+                    
                     // Permitir el acceso a la página de inicio y el registro
+                    http.requestMatchers("/comida/**").permitAll();
                     http.requestMatchers("/admin").hasRole("ADMINISTRADOR");
+                    http.requestMatchers("/admin/**").hasRole("ADMINISTRADOR");
                     http.requestMatchers("/home").authenticated();
-                   
+                    http.requestMatchers("/home/**").authenticated();
                 })
                 
                 .formLogin(form -> form

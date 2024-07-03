@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <title>Listado de Comidas</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
@@ -22,18 +21,16 @@
             <div class="col-md-6">
               <a href="/home">
                 <img
-                th:src="@{/images/logo_v2.png}"
-                style="width: 200px"
-                alt=""
-              />
-               </a>
+                  th:src="@{/images/logo_v2.png}"
+                  style="width: 200px"
+                  alt />
+              </a>
             </div>
             <div class="col-md-6 d-flex justify-content-end align-items-center">
-              <div class="">
+              <div class>
                 <a th:href="@{/logout}" class="text-white px-3">Logout</a>
-                <a href="/admin" class="text-white border px-3 py-2"
-                  >Intranet</a
-                >
+                <a sec:authorize="hasRole('ADMINISTRADOR')" href="/admin"
+                  class="text-white border px-3 py-2">Intranet</a>
               </div>
             </div>
           </div>
@@ -44,31 +41,37 @@
           <div class="row mb-5 p-0">
             <div class="col-md-4 ps-0 pe-3">
               <div class="p-3  bg-white">
-                <h4 class="fw-bold pb-2">Nombre de la comida</h4>
-                <div class="image-food w-100">
-                  <img src="/images/desayuno.jpg" class="w-100" alt="">
+                <h4 class="fw-bold pb-2" id="nombre_comida">Nombre de la
+                  comida</h4>
+                <div class="image-food w-100" id="zonaimagen">
+
                 </div>
               </div>
             </div>
             <div class="col-md-8">
               <div class="d-flex justify-content-between align-items-center">
-                <h6>DESAYUNO | <span class="text-orange">TIPO</span></h6>
-                <p><span class="text-orange"><i class="fas fa-star"></i> 5</span></p>
+                <h6><span id="tipo" class="text-orange"></span> | <span
+                    id="categoria" class="text-orange"></span></h6>
+                <p><span class="text-orange"><i class="fas fa-star"></i>
+                    5</span></p>
               </div>
               <div class="border-bottom bg-white p-3">
                 <h6>INGREDIENTES</h6>
-                <p>Descripción de los ingredientes</p>
+                <p id="ingredientes"></p>
               </div>
               <div class="bg-white p-3">
                 <h6 class="text-orange">PREPARACIÓN</h6>
-                <p>Descripción de la preparación</p>
+                <p id="preparacion"></p>
               </div>
               <div class="border bg-white p-3 mt-3">
                 <h6>CALIFICACIÓN</h6>
-                <form action="" method="post">
-                  <div class="d-flex justify-content-between align-items-center">
+                <form id="puntuacionForm" action method="post">
+                  <div
+                    class="d-flex justify-content-between align-items-center">
                     <div class="form-group w-75">
-                      <select class="form-select rounded-0" aria-label="Default select example">
+                      <select id="puntuacionSelect"
+                        class="form-select rounded-0"
+                        aria-label="Default select example">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -76,7 +79,9 @@
                         <option value="5">5</option>
                       </select>
                     </div>
-                    <button type="submit" class="btn btn-success rounded-0 w-25 my-3" style="font-size: 13px; font-weight: 700">ENVIAR</button>
+                    <button type="submit"
+                      class="btn btn-success rounded-0 w-25 my-3"
+                      style="font-size: 13px; font-weight: 700">ENVIAR</button>
                   </div>
                 </form>
               </div>
@@ -92,12 +97,96 @@
                 © 2024. All rights reserved. Created by
                 <a
                   class="text-orange"
-                  href="https://unsm.edu.pe/facultad/ingenieria-de-sistemas/" target="_blank"
-                  >@fisi</a>
+                  href="https://unsm.edu.pe/facultad/ingenieria-de-sistemas/"
+                  target="_blank">@fisi</a>
               </p>
             </div>
           </div>
-      </footer>
-    </div>
-  </body>
-</html>
+        </footer>
+      </div>
+
+      <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const id = getIdFromUrl();
+      
+      fetch(`/comida/encontrar/${id}`)
+          .then(response => response.json())
+          .then(data => {
+           
+              if (data) {
+                document.getElementById('nombre_comida').innerText = data.nombre;
+
+                const imagenElement = document.createElement('img');
+                imagenElement.src = `data:image/jpeg;base64,${data.imagen}`; 
+                imagenElement.classList.add('w-100');
+                document.getElementById('zonaimagen').appendChild(imagenElement);
+
+                document.getElementById('tipo').innerText = data.tipo;
+                document.getElementById('categoria').innerText = data.categoria.nombre;
+                document.getElementById('ingredientes').innerText = data.ingredientes;
+                document.getElementById('preparacion').innerText = data.preparacion;
+                const ratingElement = document.querySelector('.d-flex.justify-content-between.align-items-center p');
+                ratingElement.innerHTML = `<span class="text-orange"><i class="fas fa-star"></i> ${data.calificacion}</span>`;
+
+              } else {
+                  alert('No se encontró la comida con el ID especificado.');
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              alert('Hubo un error al obtener los datos de la comida.');
+          });
+        
+
+    const form = document.getElementById('puntuacionForm');
+    const select = document.getElementById('puntuacionSelect');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Evita el envío normal del formulario
+
+        const puntuacion = select.value;
+        const id = getIdFromUrl(); // Asegúrate de que esta función obtenga correctamente el ID de la URL
+
+        fetch(`/comida/puntuar/${id}`, {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ puntuacion: parseInt(puntuacion) })
+        })
+        .then(response => {
+            if (response.ok) {
+              Swal.fire({
+                title: 'Puntuación enviada exitosamente',
+                icon: 'success',
+                confirmButtonText: 'OK'
+              }).then(() => {
+                // Redirigir a la página de lista de usuarios o cualquier otra página
+                location.reload();
+              });
+            } else {
+              Swal.fire(
+                'Error!',
+                'Ya enviaste tu puntuación :D',
+                'error'
+              );
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un error al enviar la puntuación');
+        });
+    });
+  });
+
+  function getIdFromUrl() {
+    const url = window.location.href;
+    const id = url.substring(url.lastIndexOf('/') + 1);
+    return id;
+}
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </body>
+  </html>

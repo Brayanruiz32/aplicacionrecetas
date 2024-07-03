@@ -45,7 +45,7 @@
                         type="text"
                         class="form-control"
                         id="usuario"
-                        name="username"
+                        name="usuario"
                         placeholder="Nombre del usuario"
                       />
                     </div>
@@ -63,11 +63,9 @@
                     </div>
                     <div class="mb-3">
                       <label for="rol" class="form-label">Rol</label>
-                      <select class="form-select" name="rol">
+                      <select class="form-select" id="rolSelect" name="rolSelect">
                         <option selected>Seleccionar</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+
                       </select>
                     </div>
                     <div class="my-3">
@@ -83,5 +81,76 @@
         </div>
       </main>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+
+        fetch('/rol/find/all') // Ajusta esta URL según tu configuración de la API
+        .then(response => response.json())
+        .then(data => {
+          const rolSelect = document.getElementById('rolSelect');
+    
+          data.forEach(rol => {
+            const option = document.createElement('option');
+            option.value = rol.id;
+            option.textContent = rol.nombre; // Ajusta según el nombre de la propiedad en tu API
+            rolSelect.appendChild(option);
+          });
+        })
+        .catch(error => console.error('Error al cargar las categorías:', error));
+
+
+
+
+        const userId = new URLSearchParams(window.location.search).get('id');
+        if (userId) {
+          fetch(`/usuario/find/${userId}`)
+            .then(response => response.json())
+            .then(data => {
+              document.getElementById('usuario').value = data.usuario;
+              document.getElementById('password').value = data.contrasenia;
+              
+            })
+            .catch(error => console.error('Error:', error));
+        }
+  
+
+      document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evitar el envío del formulario por defecto
+  
+        const formData = {
+          usuario: document.getElementById('usuario').value,
+          contrasenia: document.getElementById('password').value,
+          rol: { id: document.getElementById('rolSelect').value }
+        };
+
+        console.log(formData)
+  
+        fetch(`/usuario/update/${userId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        })
+        .then(response => {
+          if (response.ok) {
+            Swal.fire({
+              title: 'Usuario actualizado exitosamente',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              // Redirigir a la página de lista de usuarios o cualquier otra página
+              window.location.href = '/admin/usuario';
+            });
+          } else {
+            alert('Error al actualizar el usuario');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      });
+ 
+    });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

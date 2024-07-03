@@ -1,5 +1,8 @@
 package com.principal.aplicacionrecetas.entities;
 
+import java.util.List;
+
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,5 +29,9 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "rol_id")
     private Rol rol;
+
+    @ElementCollection
+    private List<Long> recetasPuntuadas;
+
 
 }

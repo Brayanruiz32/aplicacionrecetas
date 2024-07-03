@@ -29,12 +29,12 @@
                   >Cerrar sesión</a
                 >
               </div>
-            </header>
+            </header> 
             <div class="col">
               <div class="m-3">
                 <div class="d-flex justify-content-between">
                   <h5 class="text-start py-2 text-dark">Listado de Roles</h5>
-                  <p><a href="" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Nuevo</a></p>
+                  <p><a href="rol/create" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Nuevo</a></p>
                 </div>
                 <div class="bg-white table-responsive p-2">
                   <table class="table table-striped">
@@ -45,15 +45,15 @@
                         <th class="w-25 text-center">Acciones</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
+                    <tbody id="rolesTabla">
+                      <!-- <tr>
                         <td>1</td>
                         <td>1</td>
                         <td class="w-25 text-center">
-                          <a href="" class="btn btn-primary">Editar</a>
+                          <a href="rol/update" class="btn btn-primary">Editar</a>
                           <a href="" class="btn btn-danger">Eliminar</a>
                         </td>
-                      </tr>
+                      </tr> -->
                     </tbody>
                   </table>
                 </div>
@@ -64,4 +64,78 @@
       </main>
     </div>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      fetch('/rol/find/all')
+          .then(response => response.json())
+          .then(data => {
+              const rolesTableBody = document.getElementById('rolesTabla');
+              rolesTableBody.innerHTML = ''; // Limpiar contenido previo
+
+              data.forEach(role => {
+                  const row = document.createElement('tr');
+
+                  row.innerHTML = `
+                      <td>${role.id}</td>
+                      <td>${role.nombre}</td>
+                      <td class="w-25 text-center">
+                          <a href="rol/update?id=${role.id}" class="btn btn-primary">Editar</a>
+                          <button class="btn btn-danger" onclick="deleteRole(${role.id})">Eliminar</button>
+                      </td>
+                  `;
+
+                  rolesTableBody.appendChild(row);
+              });
+          })
+          .catch(error => console.error('Error:', error));
+  });
+
+  function deleteRole(id) {
+
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`/rol/delete/${id}`, {
+          method: 'DELETE'
+        })
+        .then(response => {
+          if (response.ok) {
+            Swal.fire(
+              'Eliminado!',
+              'El rol ha sido eliminado.',
+              'success'
+            ).then(() => {
+              // Recargar la tabla de roles
+              location.reload();
+            });
+          } else {
+            Swal.fire(
+              'Error!',
+              'Hubo un problema al eliminar el rol.',
+              'error'
+            );
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          Swal.fire(
+            'Error!',
+            'Hubo un problema al eliminar el rol.',
+            'error'
+          );
+        });
+      }
+    });
+    
+}
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>

@@ -31,7 +31,7 @@
             <div class="col-md-6 d-flex justify-content-end align-items-center">
               <div class="">
                 <a th:href="@{/logout}" class="text-white px-3">Logout</a>
-                <a href="/admin" class="text-white border px-3 py-2"
+                <a sec:authorize="hasRole('ADMINISTRADOR')" href="/admin" class="text-white border px-3 py-2"
                   >Intranet</a
                 >
               </div>
@@ -51,6 +51,9 @@
                   <input type="text" class="form-control" id="search" placeholder="¿En qué estás pensando?, busca una receta...">
                   <button class="btn"><i class="fa fa-search"></i></button>
                 </div>
+                <div class="container mt-5" id="comidas-container">
+                  <!-- Aquí se listarán las comidas -->
+              </div>
                 <section class="border bg-white p-5">
                   <a href="#" class="mb-3 d-flex" target="_blank">
                     <div class="divider-wrapper d-flex">
@@ -95,5 +98,10 @@
           </div>
       </footer>
     </div>
+
+
+   
+
+
   </body>
 </html>

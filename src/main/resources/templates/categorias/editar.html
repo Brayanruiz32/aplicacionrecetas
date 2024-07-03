@@ -3,7 +3,7 @@
   xmlns:th="http://www.thymeleaf.org"
   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
-  <head>
+  <head> 
     <title>Listado de Comidas</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
     <link rel="stylesheet" th:href="@{/css/admin.css}" />
@@ -36,7 +36,7 @@
                   <h5 class="text-start py-2 text-dark">Editar categoría</h5>
                 </div>
                 <div class="bg-white p-3">
-                  <form action="" method="post">
+                  <form id="editarFormulario" action="" method="post">
                     <div class="mb-3">
                       <label for="categoria" class="form-label"
                         >Nombre de la categoria</label
@@ -45,7 +45,7 @@
                         type="text"
                         class="form-control"
                         id="categoria"
-                        name="nombre"
+                        name="categoria"
                         placeholder="Nombre de la categoria"
                       />
                     </div>
@@ -62,5 +62,61 @@
         </div>
       </main>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Obtener el parámetro id de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        if (id) {
+            fetch(`/categoria/find/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Llenar el formulario con los datos recibidos
+                    document.getElementById('categoria').value = data.nombre;
+          
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+         // Manejar el envío del formulario
+         document.getElementById('editarFormulario').addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          const categoria = document.getElementById('categoria').value;
+
+          fetch(`/categoria/update/${id}`, {
+              method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ nombre: categoria })
+          })
+          .then(response => {
+              if (response.ok) {
+                Swal.fire({
+                  title: 'Categoria actualizada exitosamente',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+                }).then(() => {
+                  // Redirigir a la página de lista de usuarios o cualquier otra página
+                  window.location.href = '/admin/categoria';
+                });
+
+              } else {
+                  // Manejar errores de la solicitud
+                  alert('Error al actualizar el categoria');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+      });
+
+    });
+
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

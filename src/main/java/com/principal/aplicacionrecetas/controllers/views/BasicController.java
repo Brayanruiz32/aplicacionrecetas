@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BasicController {
 
     
-    @GetMapping("login")
+    @GetMapping("/login")
     public String login(Model model){
         return "login";
     }
 
-    @GetMapping("home")
+    @GetMapping("/home")
     public String home(Model model){
         return "home";
     }
 
-    @GetMapping("admin")
+    @GetMapping("/admin")
     public String admin(Model model){
         return "admin";
     }
 
-    @GetMapping("registrar")
+    @GetMapping("/registrar")
     public String registrar(Model model){
         return "register";
     }

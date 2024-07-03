@@ -3,6 +3,7 @@ package com.principal.aplicacionrecetas.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,26 +22,35 @@ public class RolController implements IController<Rol>{
     private IServices<Rol> rolService;
 
     @PostMapping("/create")
-    public Rol crear(Rol nuevoRegistro) {
-        return rolService.crear(nuevoRegistro);
+    public ResponseEntity<Rol> crear(Rol nuevoRegistro) {
+        return ResponseEntity.ok(rolService.crear(nuevoRegistro));
     }
 
     @PutMapping("/update/{id}")
-    public Rol editar(Long id, Rol nuevosDatos) {
-        return rolService.actualizar(id, nuevosDatos);
+    public ResponseEntity<Rol> editar(Long id, Rol nuevosDatos) {
+        return ResponseEntity.ok(rolService.actualizar(id, nuevosDatos));
     }
     @DeleteMapping("/delete/{id}")
-    public void eliminar(Long id) {
+    public ResponseEntity<Void> eliminar(Long id) {
         rolService.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/find/{id}")
-    public Rol encontrar(Long id) {
-        return rolService.encontrar(id);
+    public ResponseEntity<Rol> encontrar(Long id) {
+        return ResponseEntity.ok(rolService.encontrar(id));
     }
 
     @GetMapping("/find/all")
-    public List<Rol> listar() {
-        return rolService.listar();
+    public ResponseEntity<List<Rol>> listar() {
+        return ResponseEntity.ok(rolService.listar());
     }
+
+
+
+
+
+
+
+
 }

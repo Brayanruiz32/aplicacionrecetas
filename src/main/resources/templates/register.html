@@ -12,17 +12,17 @@
     <div class="container-login">
       <div class="container d-flex justify-content-center">
         <div class="col-md-4 base-login">
-          <form class="login" method="post">
+          <form id="createUserForm" class="login" method="post">
             <div class="logo mb-4 d-flex justify-content-center">
               <img th:src="@{/images/logo_v1.png}" style="color: black" alt="">
             </div>
             <div class="form-group">
-              <label for="username">Nombre de usuario</label>
+              <label for="usuario">Nombre de usuario</label>
               <input
                 type="text"
                 class="form-control mb-3"
-                name="username"
-                id="username"
+                name="usuario"
+                id="usuario"
                 placeholder="Nombre de usuario"
               />
             </div>
@@ -56,5 +56,50 @@
         </div>
       </div>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const form = document.getElementById('createUserForm');
+
+          form.addEventListener('submit', function(event) {
+              event.preventDefault(); // Evitar el envío por defecto del formulario
+
+              const formData = {
+                  usuario: document.getElementById('usuario').value,
+                  contrasenia: document.getElementById('password').value,
+                  rol: { id: 2 }
+              };
+
+              fetch('/usuario/create', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(formData)
+              })
+              .then(response => {
+                  if (response.ok) {
+                    Swal.fire({
+                      title: 'Usuario creado exitosamente',
+                      icon: 'success',
+                      confirmButtonText: 'OK'
+                    }).then(() => {
+                      // Redirigir a la página de lista de usuarios o cualquier otra página
+                      window.location.href = '/login';
+                    });
+                  } else {
+                      return response.json().then(data => {
+                          throw new Error(data.message || 'Error al crear el usuario');
+                      });
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  alert('Error: ' + error.message);
+              });
+          });
+      });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

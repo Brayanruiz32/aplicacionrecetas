@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <title>Listado de Comidas</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
@@ -25,9 +24,8 @@
           <div class="col-md-10 p-0">
             <header class="d-flex py-3 justify-content-end bg-orange">
               <div class="d-flex pe-3">
-                <a th:href="@{/logout}" class="text-white px-3"
-                  >Cerrar sesión</a
-                >
+                <a th:href="@{/logout}" class="text-white px-3">Cerrar
+                  sesión</a>
               </div>
             </header>
             <div class="col" style="overflow: auto">
@@ -36,92 +34,59 @@
                   <h5 class="text-start py-2 text-dark">Crear receta</h5>
                 </div>
                 <div class="bg-white p-3">
-                  <form action="" method="post" enctype="multipart/form-data">
+                  <!-- Imagen -->
+                  <!-- <div class="mb-3">
+                          <label for="imagen" class="form-label">Imagen de la receta</label>
+                          <input type="file" class="form-control"  id="imagen" name="imagen" accept="image/png, image/jpeg, image/jpg" />
+                      </div> -->
+                  <!-- Selects -->
+
+                  <form id="comidaForm">
                     <div class="mb-3">
-                      <label for="receta" class="form-label"
-                        >Nombre de la receta</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="receta"
-                        name="comida"
-                        placeholder="Nombre de la receta"
-                      />
+                      <label for="receta" class="form-label">Nombre de la
+                        receta</label>
+                      <input type="text" class="form-control" id="receta"
+                        name="nombre" placeholder="Nombre de la receta" />
                     </div>
-                    <!--Imagen -->
-                    <div class="mb-3">
-                      <label for="imagen" class="form-label"
-                        >Imagen de la receta</label
-                      >
-                      <input
-                        type="file"
-                        class="form-control"
-                        id="imagen"
-                        name="imagen"
-                        accept="image/png, image/jpeg, image/jpg"
-                      />
-                    </div>
-                    <!--Selects -->
                     <div
-                      class="d-flex justify-content-between mb-3 gap-2 align-items-center"
-                    >
+                      class="d-flex justify-content-between mb-3 gap-2 align-items-center">
                       <div class="mb-3 w-50">
                         <label for="tipo" class="form-label">Tipo</label>
-                        <select
-                          class="form-select"
-                          name="tipo"
-                        >
+                        <select class="form-select" name="tipo">
                           <option selected>Seleccionar</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
+                          <option value="DESAYUNO">DESAYUNO</option>
+                          <option value="ALMUERZO">ALMUERZO</option>
+                          <option value="CENA">CENA</option>
                         </select>
                       </div>
                       <div class="mb-3 w-50">
-                        <label for="categoria" class="form-label"
-                          >Categoría</label
-                        >
-                        <select
-                          class="form-select"
-                          name="categoria"
-                        >
+                        <label for="categoria"
+                          class="form-label">Categoría</label>
+                        <select class="form-select" name="categoria"
+                          id="categoriaSelect">
                           <option selected>Seleccionar</option>
-                          <option value="1">Desayuno</option>
-                          <option value="2">Comida</option>
-                          <option value="3">Cena</option>
+                          <!-- Opciones de categorías -->
                         </select>
                       </div>
                     </div>
-                    <!--Textarea -->
                     <div class="mb-3">
-                      <label for="ingredientes" class="form-label"
-                        >Ingredientes</label
-                      >
-                      <textarea
-                        class="form-control"
-                        id="ingredientes"
-                        name="ingredientes"
-                        rows="5"
-                      ></textarea>
+                      <label for="ingredientes"
+                        class="form-label">Ingredientes</label>
+                      <textarea class="form-control" id="ingredientes"
+                        name="ingredientes" rows="5"></textarea>
                     </div>
                     <div class="mb-3">
-                      <label for="preparacion" class="form-label"
-                        >Preparación</label
-                      >
-                      <textarea
-                        class="form-control"
-                        id="preparacion"
-                        name="preparacion"
-                        rows="6"
-                      ></textarea>
+                      <label for="preparacion"
+                        class="form-label">Preparación</label>
+                      <textarea class="form-control" id="preparacion"
+                        name="preparacion" rows="6"></textarea>
                     </div>
                     <div class="mb-3">
-                      <button type="submit" class="btn btn-success">
-                        Guardar
-                      </button>
+                      <button type="submit"
+                        class="btn btn-success">Guardar</button>
                     </div>
                   </form>
+
                 </div>
               </div>
             </div>
@@ -129,5 +94,81 @@
         </div>
       </main>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        fetch('/categoria/find/all') // Ajusta esta URL según tu configuración de la API
+          .then(response => response.json())
+          .then(data => {
+            const categoriaSelect = document.getElementById('categoriaSelect');
+      
+            data.forEach(categoria => {
+              const option = document.createElement('option');
+              option.value = categoria.id;
+              option.textContent = categoria.nombre; // Ajusta según el nombre de la propiedad en tu API
+              categoriaSelect.appendChild(option);
+            });
+          })
+          .catch(error => console.error('Error al cargar las categorías:', error));
+
+        // Manejar el envío del formulario
+      document.getElementById('comidaForm').addEventListener('submit', function(event) {
+          event.preventDefault(); // Evita que se envíe el formulario automáticamente
+      
+          // Obtener los datos del formulario
+          // Obtener los valores de los campos del formulario
+          const nombre = document.getElementById('receta').value;
+          const tipo = document.querySelector('select[name="tipo"]').value;
+          const categoria = document.querySelector('select[name="categoria"]').value;
+          const ingredientes = document.getElementById('ingredientes').value;
+          const preparacion = document.getElementById('preparacion').value;
+
+          // Construir el objeto con los datos a enviar
+          const comidaData = {
+              nombre: nombre,
+              tipo: tipo,
+              categoria: categoria,
+              ingredientes: ingredientes,
+              preparacion: preparacion
+          };
+      
+          // Construir la solicitud POST
+          fetch('/comida/create', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(comidaData)
+          })
+          .then(response => {
+            if (response.ok) {
+
+              Swal.fire({
+                title: 'Receta creada exitosamente',
+                icon: 'success',
+                confirmButtonText: 'OK'
+              }).then(() => {
+                // Redirigir a la página de lista de usuarios o cualquier otra página
+                window.location.href = '/admin/comida';
+              });
+
+            } else {
+                return response.json().then(data => {
+                    throw new Error(data.message || 'Error al crear el usuario');
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        });
+      });
+      
+
+
+
+      });
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

@@ -31,7 +31,7 @@
             <div class="col-md-6 d-flex justify-content-end align-items-center">
               <div class="">
                 <a th:href="@{/logout}" class="text-white px-3">Logout</a>
-                <a href="/admin" class="text-white border px-3 py-2"
+                <a sec:authorize="hasRole('ADMINISTRADOR')" href="/admin" class="text-white border px-3 py-2"
                   >Intranet</a
                 >
               </div>
@@ -47,11 +47,9 @@
           <div class="row mb-5 p-0">
             <div class="col-md-3 ps-0 pe-3">
               <div class="p-3  bg-white">
-                <h4 class="fw-bold pb-2">TIPOS</h4>
-                <ul class="list-unstyled">
-                  <li><a href="/desayuno" class="p-2 mb-2 border-start border-4 d-flex fs-6 text-orange">Tipo 1</a></li>
-                  <li><a href="/desayuno" class="p-2 mb-2 border-start border-4 d-flex fs-6 text-orange">Tipo 1</a></li>
-                  <li><a href="/desayuno" class="p-2 mb-2 border-start border-4 d-flex fs-6 text-orange">Tipo 1</a></li>
+                <h4 class="fw-bold pb-2">Categorias</h4>
+                <ul class="list-unstyled" id="categoriasList">
+
                 </ul>
               </div>
             </div>
@@ -62,7 +60,8 @@
                   <button class="btn"><i class="fa fa-search"></i></button>
                 </div>
                 <section class="border bg-white p-5">
-                  <a href="#" class="mb-3 d-flex" target="_blank">
+                  <div id="comidasContainer"></div>
+                  <!-- <a href="#" class="mb-3 d-flex" target="_blank">
                     <div class="divider-wrapper d-flex">
                       <div
                         class="divider-image"
@@ -83,7 +82,7 @@
                         </p>
                       </div>
                     </div>
-                  </a>                  
+                  </a>                   -->
                 </section>
               </div>
             </div>
@@ -105,5 +104,70 @@
           </div>
       </footer>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+      fetch('/categoria/find/all')
+        .then(response => response.json()) // Convertir la respuesta a JSON
+        .then(data => {
+          // Iterar sobre las categorías y construir los <li> correspondientes
+          data.forEach(categoria => {
+            // Crear un nuevo elemento <li> con un <a> dentro
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = `/home/comidas/categoria/${categoria.nombre}`; // Enlace de ejemplo, ajusta según tus necesidades
+            a.className = 'p-2 mb-2 border-start border-4 d-flex fs-6 text-orange';
+            a.textContent = categoria.nombre; // Asumiendo que 'nombre' es el campo deseado
+
+            // Agregar el <a> al <li> y el <li> a la lista de categorías
+            li.appendChild(a);
+            categoriasList.appendChild(li);
+          });
+        })
+        .catch(error => console.error('Error al obtener las categorías:', error));
+
+
+        const url = window.location.pathname;
+        const categoriaComida = url.split('/').pop();
+
+        const titulo = document.querySelector('.hr-title');
+        titulo.textContent = categoriaComida;
+
+        console.log(categoriaComida)
+
+        fetch(`/comida/listar/categoria/${categoriaComida}`)
+            .then(response => response.json())
+            .then(comidas => {
+                const container = document.getElementById('comidasContainer');
+                comidas.forEach(comida => {
+                    const comidaElement = document.createElement('a');
+                    comidaElement.href = `/home/comidas/comida/${comida.id}`;
+                    comidaElement.className = 'mb-3 d-flex';
+                    comidaElement.target = '_blank';
+                    comidaElement.innerHTML = `
+
+                        <div class="divider-wrapper d-flex">
+                            <div class="divider-image" style="background-image: url('data:image/jpeg;base64,${comida.imagen}')"></div>
+                            <div class="divider-content ps-3">
+                                <div class="d-flex">
+                                    <h4 class="pe-2 text-orange border-end">
+                                        <strong>${comida.nombre}</strong>
+                                    </h4>
+                                    <h4 class="ps-2"><i class="fa fa-star"></i> ${comida.calificacion}</h4>
+                                </div>
+                                <div><p class="mb-1 p-0 text-success"><strong>${comida.categoria.nombre}</strong> | ${comida.tipo}</p></div>
+                                <p class="text-secondary">
+                                    ${comida.preparacion}
+                                </p>
+                            </div>
+                        </div>
+
+                    `;
+                    container.appendChild(comidaElement);
+                });
+            })
+            .catch(error => console.error('Error fetching comidas:', error));
+          });
+    </script>
   </body>
 </html>

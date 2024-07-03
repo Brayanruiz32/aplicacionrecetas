@@ -3,8 +3,13 @@ package com.principal.aplicacionrecetas.entities;
 import java.sql.Blob;
 import java.util.List;
 
+import io.micrometer.common.lang.Nullable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,6 +18,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "comidas")
 public class Comida {
 
@@ -27,22 +34,25 @@ public class Comida {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private int calificacion = 0;
+    private int calificacion;
+
+    @Column(nullable = true)
     @Lob
     private Blob imagen;
     
-    @ElementCollection
-    private List<String> preparacion;
+    @Enumerated(EnumType.STRING)
+    private Tipo tipo;
 
-    @ElementCollection
-    private List<String> ingredientes;
+    @Column(columnDefinition = "TEXT")
+    private String preparacion;
+    
+    @Column(columnDefinition = "TEXT")
+    private String ingredientes;
+
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_id")
-    private Tipo tipo;
-
+    
 }

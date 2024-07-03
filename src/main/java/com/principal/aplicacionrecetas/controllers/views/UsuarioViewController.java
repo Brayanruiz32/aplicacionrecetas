@@ -5,13 +5,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+@Controller 
 @RequestMapping("/admin/usuario")
 public class UsuarioViewController {
 
     @GetMapping()
     public String mostrarUsuarios(Model model){
-        return "carpeta/archivo";
+        return "usuarios/listar";
     }
 
     @GetMapping("/{id}")
@@ -21,12 +21,12 @@ public class UsuarioViewController {
 
     @GetMapping("/create")
     public String crearUsuarios(Model model){
-        return "carpeta/archivo";
+        return "usuarios/crear";
     }
 
     @GetMapping("/update")
     public String actualizarUsuarios(Model model){
-        return "carpeta/archivo";
+        return "usuarios/editar";
     }
 
 }

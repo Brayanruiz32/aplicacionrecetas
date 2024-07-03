@@ -36,7 +36,7 @@
                   <h5 class="text-start py-2 text-dark">Editar rol</h5>
                 </div>
                 <div class="bg-white p-3">
-                  <form action="" method="post">
+                  <form id="editarFormulario">
                     <div class="mb-3">
                       <label for="rol" class="form-label"
                         >Nombre del rol</label
@@ -62,5 +62,63 @@
         </div>
       </main>
     </div>
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Obtener el parámetro id de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        if (id) {
+            fetch(`/rol/find/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Llenar el formulario con los datos recibidos
+                    document.getElementById('rol').value = data.nombre;
+          
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+         // Manejar el envío del formulario
+         document.getElementById('editarFormulario').addEventListener('submit', function(event) {
+          event.preventDefault();
+          
+          const rol = document.getElementById('rol').value;
+
+          fetch(`/rol/update/${id}`, {
+              method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ nombre: rol })
+          })
+          .then(response => {
+            
+
+              if (response.ok) {
+                Swal.fire({
+                  title: 'Rol editado exitosamente',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+                }).then(() => {
+                  // Redirigir a la página de lista de usuarios o cualquier otra página
+                  window.location.href = "/admin/rol"; // Redirige a la página de éxito
+                });
+              } else {
+                  // Manejar errores de la solicitud
+                  alert('Error al actualizar el rol');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+      });
+
+    });
+
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

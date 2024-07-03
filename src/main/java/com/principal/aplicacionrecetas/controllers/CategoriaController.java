@@ -3,6 +3,7 @@ package com.principal.aplicacionrecetas.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,27 +22,28 @@ public class CategoriaController implements IController<Categoria> {
     private IServices<Categoria> categoriaServicio;
 
     @PostMapping("/create")
-    public Categoria crear(Categoria nuevoRegistro) {
-        return categoriaServicio.crear(nuevoRegistro);
+    public ResponseEntity<Categoria> crear(Categoria nuevoRegistro) {
+        return ResponseEntity.ok(categoriaServicio.crear(nuevoRegistro));
     }
 
     @PutMapping("/update/{id}")
-    public Categoria editar(Long id, Categoria nuevosDatos) {
-        return categoriaServicio.actualizar(id, nuevosDatos);
+    public ResponseEntity<Categoria> editar(Long id, Categoria nuevosDatos) {
+        return ResponseEntity.ok(categoriaServicio.actualizar(id, nuevosDatos));
     }
 
     @DeleteMapping("/delete/{id}")
-    public void eliminar(Long id) {
+    public ResponseEntity<Void> eliminar(Long id) {
         categoriaServicio.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/find/{id}")
-    public Categoria encontrar(Long id) {
-        return categoriaServicio.encontrar(id);
+    public ResponseEntity<Categoria> encontrar(Long id) {
+        return ResponseEntity.ok(categoriaServicio.encontrar(id));
     }
 
     @GetMapping("/find/all")
-    public List<Categoria> listar() {
-        return categoriaServicio.listar();
+    public ResponseEntity<List<Categoria>> listar() {
+        return ResponseEntity.ok(categoriaServicio.listar());
     }
 }

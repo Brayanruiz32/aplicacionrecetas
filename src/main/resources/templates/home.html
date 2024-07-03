@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <title>Listado de Comidas</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
@@ -22,18 +21,16 @@
             <div class="col-md-6">
               <a href="/home">
                 <img
-                th:src="@{/images/logo_v2.png}"
-                style="width: 200px"
-                alt=""
-              />
-               </a>
+                  th:src="@{/images/logo_v2.png}"
+                  style="width: 200px"
+                  alt />
+              </a>
             </div>
             <div class="col-md-6 d-flex justify-content-end align-items-center">
-              <div class="">
+              <div class>
                 <a th:href="@{/logout}" class="text-white px-3">Logout</a>
-                <a href="/admin" class="text-white border px-3 py-2"
-                  >Intranet</a
-                >
+                <a sec:authorize="hasRole('ADMINISTRADOR')" href="/admin"
+                  class="text-white border px-3 py-2">Intranet</a>
               </div>
             </div>
           </div>
@@ -44,17 +41,15 @@
           <!--Section 1-->
           <div class="row my-5 p-0">
             <div class="col-md-4 p-0">
-              <a href="/desayuno" class="d-flex p-2">
+              <a href="home/comidas/tipo/desayuno" class="d-flex p-2">
                 <div
                   class="category-base"
                   style="
                     background-image: url('/images/desayuno.jpg');
                     background-size: cover;
-                  "
-                >
+                  ">
                   <div
-                    class="bg-over d-flex justify-content-center align-items-center flex-column"
-                  >
+                    class="bg-over d-flex justify-content-center align-items-center flex-column">
                     <h3 class="text-light">Desayuno</h3>
                     <div class="category-icon">
                       <i class="fa fa-plus text-light fs-2"></i>
@@ -64,17 +59,15 @@
               </a>
             </div>
             <div class="col-md-4 p-0">
-              <a href="/almuerzo" class="d-flex p-2">
+              <a href="home/comidas/tipo/almuerzo" class="d-flex p-2">
                 <div
                   class="category-base"
                   style="
                     background-image: url('/images/almuerzo.jpg');
                     background-size: cover;
-                  "
-                >
+                  ">
                   <div
-                    class="bg-over d-flex justify-content-center align-items-center flex-column"
-                  >
+                    class="bg-over d-flex justify-content-center align-items-center flex-column">
                     <h3 class="text-light">Almuerzo</h3>
                     <div class="category-icon">
                       <i class="fa fa-plus text-light fs-2"></i>
@@ -84,17 +77,15 @@
               </a>
             </div>
             <div class="col-md-4 p-0">
-              <a href="/cena" class="d-flex p-2">
+              <a href="home/comidas/tipo/cena" class="d-flex p-2">
                 <div
                   class="category-base"
                   style="
                     background-image: url('/images/cena.jpg');
                     background-size: cover;
-                  "
-                >
+                  ">
                   <div
-                    class="bg-over d-flex justify-content-center align-items-center flex-column"
-                  >
+                    class="bg-over d-flex justify-content-center align-items-center flex-column">
                     <h3 class="text-light">Cena</h3>
                     <div class="category-icon">
                       <i class="fa fa-plus text-light fs-2"></i>
@@ -107,31 +98,11 @@
           <!--Section 2-->
           <div class="row mb-5">
             <div class="col">
-              <h3 class="text-center hr-title">❝ Las más puntuadas ❞</h3>
+              <h3 class="text-center hr-title">❝ Principales ❞</h3>
               <section class="border bg-white p-5">
-                <a href="#" class="mb-3 d-flex" target="_blank">
-                  <div class="divider-wrapper d-flex">
-                    <div
-                      class="divider-image"
-                      style="background-image: url('/images/food.jpg')"
-                    ></div>
-                    <div class="divider-content ps-3">
-                      <div class="d-flex">
-                        <h4 class="pe-2 text-orange border-end">
-                          <strong>Lorem ipsum</strong>
-                        </h4>
-                        <h4 class="ps-2"><i class="fa fa-star"></i> 4.3</h4>
-                      </div>
-                      <div><p class="mb-1 p-0 text-success"><strong>CATEGORIA</strong> | TIPO</p></div>
-                      <p class="text-secondary">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis animi, dolore excepturi exercitationem recusandae incidunt, ipsam libero assumenda iusto corrupti provident, ratione consequatur placeat illo eius consectetur nisi dolorum facere.
-                        Dignissimos, ullam natus! Accusamus qui suscipit atque ullam, quis alias natus similique non porro a nam veniam facere, ea officia eius sunt aspernatur ratione iure ab magni debitis, in doloribus?
-                        Molestiae ipsam explicabo hic. Architecto nesciunt maxime tempora qui delectus perferendis aut quas tenetur, ab, doloremque atque praesentium quasi! Consectetur, ut exercitationem earum veritatis eos necessitatibus eveniet ratione alias qui.
-                      </p>
-                    </div>
-                  </div>
-                </a>
-                
+                <div id="comidasContainer"></div>
+
+
               </section>
             </div>
           </div>
@@ -145,12 +116,52 @@
                 © 2024. All rights reserved. Created by
                 <a
                   class="text-orange"
-                  href="https://unsm.edu.pe/facultad/ingenieria-de-sistemas/" target="_blank"
-                  >@fisi</a>
+                  href="https://unsm.edu.pe/facultad/ingenieria-de-sistemas/"
+                  target="_blank">@fisi</a>
               </p>
             </div>
           </div>
-      </footer>
-    </div>
-  </body>
-</html>
+        </footer>
+      </div>
+
+
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/comida/listar')
+                .then(response => response.json())
+                .then(comidas => {
+                    const container = document.getElementById('comidasContainer');
+                    comidas.forEach(comida => {
+                        const comidaElement = document.createElement('a');
+                        comidaElement.href = `/home/comidas/comida/${comida.id}`;
+                        comidaElement.className = 'mb-3 d-flex';
+                        
+                        comidaElement.innerHTML = `
+
+                            <div class="divider-wrapper d-flex">
+                                <div class="divider-image" style="background-image: url('data:image/jpeg;base64,${comida.imagen}')"></div>
+                                <div class="divider-content ps-3">
+                                    <div class="d-flex">
+                                        <h4 class="pe-2 text-orange border-end">
+                                            <strong>${comida.nombre}</strong>
+                                        </h4>
+                                        <h4 class="ps-2"><i class="fa fa-star"></i> ${comida.calificacion}</h4>
+                                    </div>
+                                    <div><p class="mb-1 p-0 text-success"><strong>${comida.categoria.nombre}</strong> | ${comida.tipo}</p></div>
+                                    <p class="text-secondary">
+                                        ${comida.preparacion}
+                                    </p>
+                                </div>
+                            </div>
+
+                        `;
+                        container.appendChild(comidaElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching comidas:', error));
+        });
+    </script>
+    </body>
+  </html>
+ 

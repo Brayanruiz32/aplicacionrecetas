@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin/comida") 
-public class ComidaViewController {
+public class ComidaViewController { 
 
     @GetMapping()
     public String mostrarComidas(Model model){
-        return "carpeta/archivo";
+        return "comidas/listar";
     }
 
     @GetMapping("/{id}")
@@ -24,14 +24,14 @@ public class ComidaViewController {
         return "carpeta/archivo";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/crear")
     public String crearComida(Model model){
-        return "carpeta/archivo";
+        return "comidas/crear";
     }
 
     @GetMapping("/update")
     public String actualizarComida(Model model){
-        return "carpeta/archivo";
+        return "comidas/editar";
     }
 
 

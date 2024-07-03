@@ -34,7 +34,7 @@
               <div class="m-3">
                 <div class="d-flex justify-content-between">
                   <h5 class="text-start py-2 text-dark">Listado de recetas</h5>
-                  <p><a href="" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Nuevo</a></p>
+                  <p><a href="comida/crear" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Nuevo</a></p>
                 </div>
                 <div class="bg-white table-responsive p-2">
                   <table class="table table-striped">
@@ -48,18 +48,8 @@
                         <th class="w-25 text-center">Acciones</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td class="text-center"><img src="/images/logo_v2.png" style="width: 40px;" alt=""></td>
-                        <td class="text-center">1</td>
-                        <td class="text-center">1</td>
-                        <td class="w-25 text-center">
-                          <a href="" class="btn btn-primary">Editar</a>
-                          <a href="" class="btn btn-danger">Eliminar</a>
-                        </td>
-                      </tr>
+                    <tbody id="comidaTabla">
+                      
                     </tbody>
                   </table>
                 </div>
@@ -69,5 +59,83 @@
         </div>
       </main>
     </div>
+ 
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          fetch('/comida/find/all')  // Ajusta la ruta según tu API
+              .then(response => response.json())
+              .then(data => {
+                  const comidaTableBody = document.getElementById('comidaTabla');
+                  comidaTableBody.innerHTML = ''; // Limpiar contenido previo
+                  
+                  data.forEach(comida => {
+                      const row = document.createElement('tr');
+
+                      row.innerHTML = `
+                          <td>${comida.id}</td>
+                          <td>${comida.nombre}</td>
+                          <td class="text-center"></td>
+                          <td class="text-center">${comida.tipo}</td>
+                          <td class="text-center">${comida.categoria.nombre}</td>
+                          <td class="w-25 text-center">
+                              <a href="comida/update?id=${comida.id}" class="btn btn-primary">Editar</a>
+                              <button class="btn btn-danger" onclick="deleteComida(${comida.id})">Eliminar</button>
+                              
+                          </td>
+                      `;
+
+                      comidaTableBody.appendChild(row);
+                  });
+              })
+              .catch(error => console.error('Error:', error));
+      });
+
+      function deleteComida(id) {
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: "¡No podrás revertir esto!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, eliminarlo!',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            fetch(`/comida/delete/${id}`, {
+              method: 'DELETE'
+            })
+            .then(response => {
+              if (response.ok) {
+                Swal.fire(
+                  'Eliminado!',
+                  'La receta ha sido eliminada.',
+                  'success'
+                ).then(() => {
+                  // Recargar la tabla de comidas
+                  location.reload();
+                });
+              } else {
+                Swal.fire(
+                  'Error!',
+                  'Hubo un problema al eliminar la receta.',
+                  'error'
+                );
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              Swal.fire(
+                'Error!',
+                'Hubo un problema al eliminar la comida.',
+                'error'
+              );
+            });
+          }
+        });
+      }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

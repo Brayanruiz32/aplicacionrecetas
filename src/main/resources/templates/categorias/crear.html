@@ -36,7 +36,7 @@
                   <h5 class="text-start py-2 text-dark">Crear categoría</h5>
                 </div>
                 <div class="bg-white p-3">
-                  <form action="" method="post">
+                  <form id="categoriaCreateForm" th:action="@{/categoria/create}" method="post">
                     <div class="mb-3">
                       <label for="categoria" class="form-label"
                         >Nombre de la categoria</label
@@ -45,7 +45,7 @@
                         type="text"
                         class="form-control"
                         id="categoria"
-                        name="nombre"
+                        name="categoria"
                         placeholder="Nombre de la categoria"
                       />
                     </div>
@@ -62,5 +62,40 @@
         </div>
       </main>
     </div>
+    <script>
+      document.getElementById("categoriaCreateForm").addEventListener("submit", function(event) {
+          event.preventDefault();
+          const form = event.target;
+          const data = {
+              nombre: form.categoria.value,
+          };
+
+          fetch("/categoria/create", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+          })
+          .then(response => {
+            if (response.ok) {
+              Swal.fire({
+                title: 'Categoria creada exitosamente',
+                icon: 'success',
+                confirmButtonText: 'OK'
+              }).then(() => {
+                // Redirigir a la página de lista de usuarios o cualquier otra página
+                window.location.href = '/admin/categoria';
+              });
+
+             
+            } else {
+              return response.text().then(text => { throw new Error(text); });
+            }
+          })
+          .catch(error => console.error("Error:", error));
+      });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>
