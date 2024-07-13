@@ -1,12 +1,10 @@
 package com.principal.aplicacionrecetas.repositories;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.principal.aplicacionrecetas.dtos.comida.ComidaDTO;
 import com.principal.aplicacionrecetas.entities.Comida;
 import com.principal.aplicacionrecetas.entities.Tipo;
 

@@ -10,12 +10,10 @@ import javax.sql.rowset.serial.SerialException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.principal.aplicacionrecetas.dtos.comida.ComidaDTO;
-import com.principal.aplicacionrecetas.dtos.comida.ComidaDTOAdmin;
 import com.principal.aplicacionrecetas.entities.Categoria;
 import com.principal.aplicacionrecetas.entities.Comida;
 //import com.principal.aplicacionrecetas.entities.Tipo;
