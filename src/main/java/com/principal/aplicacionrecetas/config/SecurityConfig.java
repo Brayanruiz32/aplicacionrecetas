@@ -29,7 +29,10 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 // .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
                 .authorizeHttpRequests(http -> { 
+                    
+                    http.requestMatchers(HttpMethod.POST,"/usuario/**").permitAll();
                     String[] rutas = { "/rol/**","/comida/**" , "/usuario/**", "/categoria/**", "/tipo/**", "/comida/**" };
                     for (String ruta : rutas) {
                         // http.requestMatchers(HttpMethod.GET, ruta).permitAll();
@@ -38,12 +41,12 @@ public class SecurityConfig {
                         // http.requestMatchers(HttpMethod.DELETE, ruta).permitAll();
 
 
-                        http.requestMatchers(HttpMethod.GET, ruta).hasAnyRole("ADMINISTRADOR");
-                        http.requestMatchers(HttpMethod.POST, ruta).hasAnyRole("ADMINISTRADOR");
+                        http.requestMatchers(HttpMethod.GET, ruta).authenticated();
+                        http.requestMatchers(HttpMethod.POST, ruta).authenticated();
                         http.requestMatchers(HttpMethod.PUT, ruta).hasAnyRole("ADMINISTRADOR");
                         http.requestMatchers(HttpMethod.DELETE, ruta).hasAnyRole("ADMINISTRADOR");
                     }
-              
+                    
                     http.requestMatchers("/registrar" ,"/login","/css/**", "/js/**", "/images/**", "/uploads/**", "/bootstrap/**","/fontawesome/**").permitAll();
                     
                     // Permitir el acceso a la página de inicio y el registro
